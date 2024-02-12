@@ -1,0 +1,255 @@
+https://catalog.data.gov/dataset/walkability-index1
+
+INFO ON COLUMN TITLES
+
+D2A_EPHHM: The mix of employment types and occupied housing. A block group with a diverse set of    employment types (such as office, retail, and service) plus a large quantity of occupied housing units will have a relatively high value. Higher values correlate with more walk trips.
+
+D2B_E8MIXA: The mix of employment types in a block group (such as retail, office, or industrial). Higher values correlate with more walk trips.
+
+D3A: Total road network density
+
+D3AAO: Network density in terms of facility miles of auto-oriented
+links per square mile
+
+D3AMM: Network density in terms of facility miles of multi-modal
+links per square mile
+
+D3APO: Network density in terms of facility miles of pedestrianoriented links per square mile
+
+D3B: Street intersection density (pedestrian-oriented intersections). Higher intersection density is correlated with more walk trips.
+
+D3BAO: Intersection density in terms of auto-oriented intersections
+per square mile
+
+D3BMM3: Intersection density in terms of multi-modal intersections
+having three legs per square mile
+
+D3BMM4: Intersection density in terms of multi-modal intersections
+having four or more legs per square mile
+
+D3BPO3: Intersection density in terms of pedestrian-oriented
+intersections having three legs per square mile
+
+D3BPO4: Intersection density in terms of pedestrian-oriented
+intersections having four or more legs per square mile
+
+D2r_JobPop: Regional Diversity. Standard calculation based on
+population and total employment: Deviation of CBG ratio
+of jobs/pop from the regional average ratio of jobs/pop
+
+D2r_WrkEmp: Household Workers per Job, as compared to the region:
+Deviation of CBG ratio of household workers/job from
+regional average ratio of household workers/job
+
+D2a_WrkEmp: Household Workers per Job, by CBG
+
+D2c_WrEmIx: Household Workers per Job Equilibrium Index; the closer to one the more balanced the resident workers and jobs in
+the CBG
+
+D2a_EpHHm: Employment and household entropy
+
+D2c_TrpMx1: Employment and Household entropy (based on vehicle trip
+production and trip attractions including all 5 employment
+categories)
+
+D2c_TrpMx2: Employment and Household Entropy calculations, based
+on trips production and trip attractions including 4 of the 5
+employment categories
+
+D2c_TripEq:Trip productions and trip attractions equilibrium index; the
+closer to one, the more balanced the trip making
+
+D2a_JpHH: Jobs per household
+
+D2b_E5Mix: 5-tier employment entropy (denominator set to observed
+employment types in the CBG)
+
+D2b_E5MixA: 5-tier employment entropy (denominator set to the static 5
+employment types in the CBG)
+
+D2b_E8Mix: 8-tier employment entropy (denominator set to observed
+employment types in the CBG)
+
+D2b_E8MixA: 8-tier employment entropy (denominator set to the static 8
+employment types in the CBG)
+
+D1d: Gross activity density (employment + HUs) on
+unprotected land
+
+D1_Flag: Flag indicating that density metrics are based on total
+CBG land acreage rather than unprotected acreage
+
+D1c8_Ret: Gross retail (8-tier) employment density (jobs/acre) on
+unprotected land
+
+D1c8_Off: Gross office (8-tier) employment density (jobs/acre) on
+unprotected land
+
+D1c8_Ind: Gross industrial (8-tier) employment density (jobs/acre) on
+unprotected land
+
+D1c8_Svc: Gross service (8-tier) employment density (jobs/acre) on
+unprotected land
+
+D1c8_Ent: Gross entertainment (8-tier) employment density
+(jobs/acre) on unprotected land
+
+D1c8_Ed: Gross education(8-tier) employment density (jobs/acre) on
+unprotected land
+
+D1c8_Hlth: Gross health care (8-tier) employment density (jobs/acre)
+on unprotected land
+
+D1c8_Pub: Gross retail (8-tier) employment density (jobs/acre) on
+unprotected land
+
+D1c5_Ret: Gross retail (5-tier) employment density (jobs/acre) on
+unprotected land
+
+D1c5_Off: Gross office (5-tier) employment density (jobs/acre) on
+unprotected land
+
+D1c5_Ind: Gross industrial (5-tier) employment density (jobs/acre) on
+unprotected land
+
+D1c5_Svc: Gross service (5-tier) employment density (jobs/acre) on
+unprotected land
+
+D1c5_Ent: Gross entertainment (5-tier) employment density
+(jobs/acre) on unprotected land
+
+D1a: Gross residential density (HU/acre) on unprotected land
+
+D1b: Gross population density (people/acre) on unprotected
+land
+
+D1c: Gross employment density (jobs/acre) on unprotected land
+
+E_PctLowWage: % LowWageWk of total #workers in a CBG (work
+location), 2017
+
+E_LowWageWk: # of workers earning $1250/month or less (work location),
+2017
+
+E_MedWageWk: # of workers earning more than $1250/month but less than
+$3333/month (work location), 2017
+
+E_HiWageWk: # of workers earning $3333/month or more, 2017
+
+E8_Ret: Retail jobs within an 8-tier employment classification
+scheme (LEHD: CNS07), 2017
+
+E8_Off: Office jobs within an 8-tier employment classification
+scheme (LEHD: CNS09 + CNS10 + CNS11 + CNS13) ,
+2017
+
+E8_Ind: Industrial jobs within an 8-tier employment classification
+scheme (LEHD: CNS01 + CNS02 + CNS03 + CNS04 +
+CNS05 + CNS06 + CNS08) , 2017
+
+E8_Svc: Service jobs within an 8-tier employment classification
+scheme (LEHD: CNS12 + CNS14 + CNS19) , 2017
+
+E8_Ed: Education jobs within an 8-tier employment classification
+scheme (LEHD: CNS15), 2017
+
+E8_Hlth: Health care jobs within an 8-tier employment
+classification scheme (LEHD: CNS16), 2017
+
+E8_Pub: Public administration jobs within an 8-tier employment
+classification scheme (LEHD: CNS20), 2017
+
+E5_Ret: Retail jobs within a 5-tier employment classification
+scheme (LEHD: CNS07), 2017
+
+E5_Off: Office jobs within a 5-tier employment classification
+scheme (LEHD: CNS09 + CNS10 + CNS11 + CNS13 +
+CNS20) , 2017
+
+E5_Ind: Industrial jobs within a 5-tier employment classification
+scheme (LEHD: CNS01 + CNS02 + CNS03 + CNS04 +
+CNS05 + CNS06 + CNS08) , 2017
+
+E5_Svc: Service jobs within a 5-tier employment classification
+scheme (LEHD: CNS12 + CNS14 + CNS15 + CNS16 +
+CNS19) , 2017
+
+E5_Ent: Entertainment jobs within a 5-tier employment
+classification scheme (LEHD: CNS17 + CNS18), 2017
+
+TotEmp: Total employment, 2017
+
+R_PctLowWage: Percent of low wage workers in a CBG
+
+R_HiWageWk: Count of workers earning $3333/month or more
+
+R_MedWageWk: Count of workers earning more than $1250/month but less
+than $3333/month
+
+R_LowWageWk: Count of workers earning $1250/month or less (home
+location)
+
+Workers: Count of workers in CBG (home location), 2017
+
+Pct_AO2p: Percent of two-plus-car households in CBG, 2018
+
+AutoOwn2p: Number of households in CBG that own two or more
+automobiles, 2018
+
+Pct_AO1: Percent of one-car households in CBG, 2018
+
+AutoOwn1: Number of households in CBG that own one automobile,
+2018
+
+Pct_AO0: Percent of zero-car households in CBG, 2018
+
+AutoOwn0: Number of households in CBG that own zero automobiles,
+2018
+
+P_WrkAge: Percent of population that is working aged 18 to 64 years, 2018
+
+HH: Households (occupied housing units), 2018
+
+CountHU: Housing units, 2018
+
+TotPop: Population, 2018
+
+Ac_Unpr: Total land area (acres) that is not protected from
+development (i.e., not a park, natural area or conservation
+area)
+
+Ac_Land: Total land area (acres)
+
+Ac_Water: Total water area (acres)
+
+Ac_Total: Total geometric area (acres) of the CBG
+
+CBSA_Wrk: Total number of workers that live in CBSA
+
+CBSA_Emp: Total employment in CBSA
+
+CBSA_Pop: Total population in CBSA
+
+CBSA_Name: Name of CBSA in which CBG resides
+
+CBSA: FIPS for Core-Based Statistical Area (CBSA) in which
+CBG resides
+
+CSA_Name: Name of CSA in which CBG resides
+
+CSA: Combined Statistical Area (CSA) Code
+
+BLKGRPCE: Census block group FIPS code in which CBG resides
+
+TRACTCE: Census tract FIPS code in which CBG resides
+
+COUNTYFP: County FIPS code
+
+STATEFP: State FIPS code
+
+GEOID20** Census block group 12-digit FIPS code (2018)
+
+GEOID10: Census block group 12-digit FIPS code (2010)
+
+OBJECTID: A unique identifier for each record in the dataset
+
