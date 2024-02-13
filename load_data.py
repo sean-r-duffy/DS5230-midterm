@@ -7,6 +7,22 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
          sales_years=(2013, 2018, 2019, 2020, 2021, 2022, 2021),
          days_on_market_years=(2019, 2020, 2021, 2022, 2023),
          new_cons_years=(2018, 2019, 2020, 2021, 2022, 2023)):
+    '''
+    Returns a df of regions by zipcode along with 6 different metrics for that region:
+    Zillow Home Value Index (ZHVI), Zillow Home Value Forecast (ZHVF), Zillow Observed Rent Index (ZORI),
+    Average Number of Monthly Sale Listings, Average Number of Monthly Sales, Average Number of Days on Market,
+    Average Number of Monthly New Constructions
+
+    To get data for different years pass an alternate tuple/list for any of the following metrics
+    :param zhvi_years: Must be 2003 or later
+    :param zori_years: Must be 2018 or later
+    :param sale_listings_years: Must be 2019 or later
+    :param sales_years: must be 2013 or later
+    :param days_on_market_years: must be 2019 or later
+    :param new_cons_years: must be 2018 or later
+    :return:
+    '''
+
 
     zhvi_url = 'https://files.zillowstatic.com/research/public_csvs/zhvi/Zip_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv?t=1707768517 '
     zhvf_url = 'https://files.zillowstatic.com/research/public_csvs/zhvf_growth/Zip_zhvf_growth_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv?t=1707768517 '
@@ -61,7 +77,7 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
     # Sale Listings feature selection
     sale_listings_new_cols = []
     for year in sale_listings_years:
-        new_column = 'Sale Listings' + str(year)
+        new_column = 'Sale Listings ' + str(year)
         sale_listings_new_cols.append(new_column)
         component_cols = [x for x in sale_listings.columns.to_list() if str(year) in x]
         sale_listings[new_column] = sale_listings[component_cols].mean(axis=1)
@@ -74,7 +90,7 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
     # Sales feature selection
     sales_new_cols = []
     for year in sales_years:
-        new_column = 'Sales' + str(year)
+        new_column = 'Sales ' + str(year)
         sales_new_cols.append(new_column)
         component_cols = [x for x in sales.columns.to_list() if str(year) in x]
         sales[new_column] = sales[component_cols].mean(axis=1)
