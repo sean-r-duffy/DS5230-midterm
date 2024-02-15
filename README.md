@@ -1,7 +1,10 @@
 # DS5230-midterm
 
-### Google Doc
+### Google Doc Part 1
 - https://docs.google.com/document/d/1BZ5KqcvkaBRCVkPO-kStZ7k-wTrbR7B0_wYhRSPfpSo/edit?usp=sharing
+
+### Google Doc Part 2
+- https://docs.google.com/document/d/1s3rgd9L8NhiVRMIKsFZtOozB-plqzaAXcyet0tZHSmo/edit?usp=sharing
 
 ### Potential Data Sources
 - https://www.nyc.gov/site/planning/data-maps/open-data/dwn-housing-database.page#housingdevelopmentproject
