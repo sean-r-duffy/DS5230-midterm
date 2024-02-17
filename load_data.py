@@ -32,6 +32,8 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
     days_on_market_url = 'https://files.zillowstatic.com/research/public_csvs/mean_doz_pending/Metro_mean_doz_pending_uc_sfrcondo_sm_month.csv?t=1707768517 '
     new_cons_url = 'https://files.zillowstatic.com/research/public_csvs/new_con_sales_count_raw/Metro_new_con_sales_count_raw_uc_sfrcondo_month.csv?t=1707768517 '
     metro_mapping_url = 'https://raw.githubusercontent.com/chambliss/Major-Metro-Areas-And-Their-Cities/master/major_metro_areas.csv'
+    transit_url = 'datasets/transit_scores.csv'
+    walk_url = 'https://edg.epa.gov/EPADataCommons/public/OA/EPA_SmartLocationDatabase_V3_Jan_2021_Final.csv'
 
     zhvi = pd.read_csv(zhvi_url)
     zhvf = pd.read_csv(zhvf_url)
@@ -41,6 +43,8 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
     days_on_market = pd.read_csv(days_on_market_url)
     new_cons = pd.read_csv(new_cons_url)
     metro_mapping = pd.read_csv(metro_mapping_url)
+    transit = pd.read_csv(transit_url)
+    walk = pd.read_csv(walk_url)
 
     # ZHVI feature selection
     zhvi_new_cols = []
@@ -150,5 +154,13 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
     df2 = df2.drop(columns=['City'])
 
     df = pd.merge(df, df2, on=['Metro', 'StateName'])
+
+    df = df.drop(columns=['StateName'])
+
+    # Adding transit scores
+    transit = transit.drop(columns='Unnamed: 0')
+    transit = transit.rename(columns={x: 'Transit ' + x for x in ['Rank', 'Score', 'TCI', 'Jobs',
+                                                                  'Trips/Week', 'Routes']})
+    df = pd.merge(df, transit, on=['City', 'State'], how='left')
 
     return df
