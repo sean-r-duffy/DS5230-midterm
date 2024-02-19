@@ -4,9 +4,10 @@ import pandas as pd
 def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
          zori_years=(2018, 2019, 2020, 2021, 2022, 2023),
          sale_listings_years=(2019, 2020, 2021, 2022, 2023),
-         sales_years=(2013, 2018, 2019, 2020, 2021, 2022, 2021),
+         sales_years=(2013, 2018, 2019, 2020, 2021, 2022, 2023),
          days_on_market_years=(2019, 2020, 2021, 2022, 2023),
          new_cons_years=(2018, 2019, 2020, 2021, 2022, 2023)):
+
     '''
     Returns a df of regions by zipcode along with 6 different metrics for that region:
     Zillow Home Value Index (ZHVI), Zillow Home Value Forecast (ZHVF), Zillow Observed Rent Index (ZORI),
@@ -20,7 +21,7 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
     :param sales_years: must be 2013 or later
     :param days_on_market_years: must be 2019 or later
     :param new_cons_years: must be 2018 or later
-    :return:
+    :return: Dataframe
     '''
 
 
