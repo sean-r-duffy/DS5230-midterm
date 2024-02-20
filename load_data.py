@@ -6,15 +6,16 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
          sale_listings_years=(2019, 2020, 2021, 2022, 2023),
          sales_years=(2013, 2018, 2019, 2020, 2021, 2022, 2023),
          days_on_market_years=(2019, 2020, 2021, 2022, 2023),
-         new_cons_years=(2018, 2019, 2020, 2021, 2022, 2023)):
-
-    '''
+         new_cons_years=(2018, 2019, 2020, 2021, 2022, 2023),
+         add_walk_columns=None):
+    """
     Returns a df of regions by zipcode along with 6 different metrics for that region:
     Zillow Home Value Index (ZHVI), Zillow Home Value Forecast (ZHVF), Zillow Observed Rent Index (ZORI),
     Average Number of Monthly Sale Listings, Average Number of Monthly Sales, Average Number of Days on Market,
     Average Number of Monthly New Constructions
 
     To get data for different years pass an alternate tuple/list for any of the following metrics
+    :param add_walk_columns: Additional columns to be added from walkability dataset (County averages will be given)
     :param zhvi_years: Must be 2003 or later
     :param zori_years: Must be 2018 or later
     :param sale_listings_years: Must be 2019 or later
@@ -22,9 +23,10 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
     :param days_on_market_years: must be 2019 or later
     :param new_cons_years: must be 2018 or later
     :return: Dataframe
-    '''
+    """
 
-
+    if add_walk_columns is None:
+        add_walk_columns = []
     zhvi_url = 'https://files.zillowstatic.com/research/public_csvs/zhvi/Zip_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv?t=1707768517 '
     zhvf_url = 'https://files.zillowstatic.com/research/public_csvs/zhvf_growth/Zip_zhvf_growth_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv?t=1707768517 '
     zori_url = 'https://files.zillowstatic.com/research/public_csvs/zori/Zip_zori_uc_sfrcondomfr_sm_month.csv?t=1707768517 '
@@ -35,19 +37,10 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
     metro_mapping_url = 'https://raw.githubusercontent.com/chambliss/Major-Metro-Areas-And-Their-Cities/master/major_metro_areas.csv'
     transit_url = 'datasets/transit_scores.csv'
     walk_url = 'https://edg.epa.gov/EPADataCommons/public/OA/EPA_SmartLocationDatabase_V3_Jan_2021_Final.csv'
+    geocodes_url = 'datasets/geocodes.csv'
 
+    # ZHVI
     zhvi = pd.read_csv(zhvi_url)
-    zhvf = pd.read_csv(zhvf_url)
-    zori = pd.read_csv(zori_url)
-    sale_listings = pd.read_csv(sale_listings_url)
-    sales = pd.read_csv(sales_url)
-    days_on_market = pd.read_csv(days_on_market_url)
-    new_cons = pd.read_csv(new_cons_url)
-    metro_mapping = pd.read_csv(metro_mapping_url)
-    transit = pd.read_csv(transit_url)
-    walk = pd.read_csv(walk_url)
-
-    # ZHVI feature selection
     zhvi_new_cols = []
     for year in zhvi_years:
         new_column = 'ZHVI ' + str(year)
@@ -60,13 +53,20 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
 
     zhvi = zhvi.rename(columns={'SizeRank': 'SizeRankZip'})
 
-    # ZHVF feature selection
+    # ZHVF
+    zhvf = pd.read_csv(zhvf_url)
     zhvf.columns = ['RegionID', 'SizeRank', 'RegionName', 'RegionType', 'StateName', 'State', 'City', 'Metro',
                     'CountyName', 'ZHVF BaseDate', 'ZHVF 2024-02-29', 'ZHVF 2024-04-30', 'ZHVF 2025-01-31']
 
     zhvf = zhvf.rename(columns={'SizeRank': 'SizeRankZip'})
 
-    # ZORI feature selection
+    df = pd.merge(zhvi, zhvf, on=['RegionID', 'SizeRankZip', 'RegionName', 'RegionType', 'StateName',
+                                  'State', 'City', 'Metro', 'CountyName'], how='outer')
+    del zhvi
+    del zhvf
+
+    # ZORI
+    zori = pd.read_csv(zori_url)
     zori_new_cols = []
     for year in zori_years:
         new_column = 'ZORI ' + str(year)
@@ -79,7 +79,13 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
 
     zori = zori.rename(columns={'SizeRank': 'SizeRankZip'})
 
-    # Sale Listings feature selection
+    df = pd.merge(df, zori, on=['RegionID', 'SizeRankZip', 'RegionName', 'RegionType', 'StateName',
+                                'State', 'City', 'Metro', 'CountyName'], how='outer')
+
+    del zori
+
+    # Sale Listings
+    sale_listings = pd.read_csv(sale_listings_url)
     sale_listings_new_cols = []
     for year in sale_listings_years:
         new_column = 'Sale Listings ' + str(year)
@@ -92,7 +98,8 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
 
     sale_listings = sale_listings.rename(columns={'SizeRank': 'SizeRankMSA'})
 
-    # Sales feature selection
+    # Sales
+    sales = pd.read_csv(sales_url)
     sales_new_cols = []
     for year in sales_years:
         new_column = 'Sales ' + str(year)
@@ -105,7 +112,14 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
 
     sales = sales.rename(columns={'SizeRank': 'SizeRankMSA'})
 
-    # Days-on-market feature selection
+    df2 = pd.merge(sale_listings, sales, on=['RegionID', 'SizeRankMSA', 'RegionName', 'RegionType', 'StateName'],
+                   how='outer')
+
+    del sale_listings
+    del sales
+
+    # Days-on-market
+    days_on_market = pd.read_csv(days_on_market_url)
     dom_new_cols = []
     for year in days_on_market_years:
         new_column = 'Days on Market ' + str(year)
@@ -118,7 +132,13 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
 
     days_on_market = days_on_market.rename(columns={'SizeRank': 'SizeRankMSA'})
 
-    # New-cons feature selection
+    df2 = pd.merge(df2, days_on_market, on=['RegionID', 'SizeRankMSA', 'RegionName', 'RegionType', 'StateName'],
+                   how='outer')
+
+    del days_on_market
+
+    # New-cons
+    new_cons = pd.read_csv(new_cons_url)
     cons_new_cols = []
     for year in new_cons_years:
         new_column = 'New Construction ' + str(year)
@@ -131,37 +151,54 @@ def load(zhvi_years=(2003, 2008, 2013, 2018, 2019, 2020, 2021, 2022, 2023),
 
     new_cons = new_cons.rename(columns={'SizeRank': 'SizeRankMSA'})
 
+    df2 = pd.merge(df2, new_cons, on=['RegionID', 'SizeRankMSA', 'RegionName', 'RegionType', 'StateName'],
+                   how='outer')
+
+    del new_cons
+
     # Cleaning metro-statistical-area mapping to use for joins
+    metro_mapping = pd.read_csv(metro_mapping_url)
     metro_mapping['Metro Area'] = metro_mapping['Metro Area'].apply(lambda x: x.replace(' Metro Area', ''))
     metro_mapping = metro_mapping.rename(columns={'Metro Area': 'Metro'})
     metro_mapping = metro_mapping[['City', 'Metro']]
 
-    # Joining dataframes
-    df = pd.merge(zhvi, zhvf, on=['RegionID', 'SizeRankZip', 'RegionName', 'RegionType', 'StateName',
-                                  'State', 'City', 'Metro', 'CountyName'], how='outer')
-    df = pd.merge(df, zori, on=['RegionID', 'SizeRankZip', 'RegionName', 'RegionType', 'StateName',
-                                'State', 'City', 'Metro', 'CountyName'], how='outer')
-
-    df2 = pd.merge(sale_listings, sales, on=['RegionID', 'SizeRankMSA', 'RegionName', 'RegionType', 'StateName'],
-                   how='outer')
-    df2 = pd.merge(df2, days_on_market, on=['RegionID', 'SizeRankMSA', 'RegionName', 'RegionType', 'StateName'],
-                   how='outer')
-    df2 = pd.merge(df2, new_cons, on=['RegionID', 'SizeRankMSA', 'RegionName', 'RegionType', 'StateName'],
-                   how='outer')
+    # Joining ZORI-ZHVI-ZHVF dataframe with sales-listings-daysonmarket-construction dataframe
     df2['City'] = df2['RegionName'].apply(lambda x: x.split(',')[0])
     df2 = df2.drop(columns=['RegionName', 'RegionType', 'RegionID'])
-
     df2 = pd.merge(df2, metro_mapping[['Metro', 'City']], on='City', how='left')
     df2 = df2.drop(columns=['City'])
-
     df = pd.merge(df, df2, on=['Metro', 'StateName'])
+
+    del metro_mapping
+    del df2
 
     df = df.drop(columns=['StateName'])
 
     # Adding transit scores
+    transit = pd.read_csv(transit_url)
     transit = transit.drop(columns='Unnamed: 0')
     transit = transit.rename(columns={x: 'Transit ' + x for x in ['Rank', 'Score', 'TCI', 'Jobs',
                                                                   'Trips/Week', 'Routes']})
     df = pd.merge(df, transit, on=['City', 'State'], how='left')
+
+    del transit
+
+    # Adding walkability
+    walk = pd.read_csv(walk_url)
+    geocodes = pd.read_csv(geocodes_url)
+    df = pd.merge(df, geocodes, left_on=['State', 'CountyName'], right_on=['state abbv', 'area'], how='left')
+    df = df.drop(columns=['state abbv', 'area'], axis=1)
+    df = df.rename(columns={'state code': 'STATEFP', 'county code': 'COUNTYFP'})
+
+    if add_walk_columns is None:
+        add_walk_columns = []
+
+    walk = walk[['STATEFP', 'COUNTYFP', 'NatWalkInd'] + add_walk_columns]
+    walk = walk.groupby(by=['STATEFP', 'COUNTYFP']).mean()
+    walk = walk.reset_index(level=0).reset_index(level=0)
+    df = pd.merge(df, walk, on=['STATEFP', 'COUNTYFP'], how='left')
+
+    del walk
+    del geocodes
 
     return df
